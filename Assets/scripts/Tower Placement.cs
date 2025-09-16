@@ -9,10 +9,13 @@ public class TowerPlacement : MonoBehaviour
 {
     [SerializeField] private Camera PlayerCamera;
     [SerializeField] private LayerMask _mask;
+     private GameObject _tower;
+    [SerializeField] private GameObject _bigT;
+    [SerializeField] private GameObject _coolTower;
+    [SerializeField] private GameObject _canon;
 
     private GameObject currentGameObject;
-    private float alpha = 0.5f;
-
+    //private float alpha = 0.5f;
     private GameObject CurrentPlacingTower;
     //id system
     void Start()
@@ -45,31 +48,60 @@ public class TowerPlacement : MonoBehaviour
                 }
             }
 
-            // Only place tower if NOT clicking on UI
+            
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
 
                 CurrentPlacingTower = null;
                 Debug.Log("Tower Placed");
-                //    GameObject tower = Instantiate(CurrentPlacingTower, hitInfo.transform.position, Quaternion.identity);
-                //    tower.transform.parent = hitInfo.transform;
-                //}
+                GameObject _tower = Instantiate(CurrentPlacingTower, hitInfo.transform.position, Quaternion.identity);
+                _tower.transform.parent = hitInfo.transform;
             }
         }
+        
 
-        void ChangeAlpha(Material mat, float alphaVal)
+        //void ChangeAlpha(Material mat, float alphaVal)
+        //{
+        //    Color oldColor = mat.color;
+        //    Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, alphaVal);
+        //    mat.SetColor("_Color", newColor);
+        //}
+    }
+
+    public void SetTowerToPlace(GameObject _tower)
+    {
+        CurrentPlacingTower = Instantiate(_tower, Vector3.zero, Quaternion.identity);
+    }
+
+    public void PlaceBigT(GameObject _tower) 
+    {
+        _tower = _bigT;
+    }
+
+    public void PlaceCoolTower(GameObject _tower)
+    {
+        _tower = _coolTower;
+    }
+
+    public void PlaceCanon(GameObject _tower)
+    {
+        _tower = _canon;
+    }
+
+    public void CancelTowerPlacement()
+    {
+        if (CurrentPlacingTower != null)
         {
-            Color oldColor = mat.color;
-            Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, alphaVal);
-            mat.SetColor("_Color", newColor);
+            Destroy(CurrentPlacingTower);
+            CurrentPlacingTower = null;
+            Debug.Log("Tower placement cancelled.");
         }
     }
 
-    public void SetTowerToPlace(GameObject tower)
-    {
-        CurrentPlacingTower = Instantiate(tower, Vector3.zero, Quaternion.identity);
+
+
+
     }
-}
     
 
     //public void SetTowerToPlace(GameObject tower)
