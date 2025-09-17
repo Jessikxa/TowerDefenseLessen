@@ -52,8 +52,9 @@ public class TowerPlacement : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
 
-                CurrentPlacingTower = null;
+                //CurrentPlacingTower = null;
                 Debug.Log("Tower Placed");
+                Debug.Log(CurrentPlacingTower);
                 GameObject _tower = Instantiate(CurrentPlacingTower, hitInfo.transform.position, Quaternion.identity);
                 _tower.transform.parent = hitInfo.transform;
             }
